@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.DosFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -34,6 +35,7 @@ public class NIO2Test {
         Path[] contents = {src.resolve(Paths.get("sample1","sample1.txt")),
                            src.resolve(Paths.get("sample2","sample2.txt"))
                           };
+        
         for(Path p:contents){
             Files.createDirectories(p.getParent());   
             Files.createFile(p);
@@ -48,10 +50,10 @@ public class NIO2Test {
         System.out.println("Working Directory: " + pWorkDir);
         System.out.println();
         
-        showFileStoreInfo();
-        showRootDirectories();
-        showSupportedAttributeViews();
-        testPath();
+        //showFileStoreInfo();
+        //showRootDirectories();
+        //showSupportedAttributeViews();
+        //testPath();
         testFiles();
     }
     
@@ -73,7 +75,6 @@ public class NIO2Test {
             if(Files.exists(p) && !Files.notExists(p)){
                 BasicFileAttributes attr = Files.readAttributes(p,                                                
                                                 BasicFileAttributes.class);
-                
                 System.out.println("Attributes: ");
                 System.out.println("   Size:" +  attr.size());
                 System.out.println("   Create:" +  toDateFormat(attr.creationTime()));

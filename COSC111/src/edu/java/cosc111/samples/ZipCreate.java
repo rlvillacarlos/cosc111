@@ -23,10 +23,12 @@ public class ZipCreate {
         env.put("create", "true");
         JFileChooser jChooser = new JFileChooser("D:\\");        
         jChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        
         if(jChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
             File f = jChooser.getSelectedFile();
             if(f.getParent()!=null){
                 String sPath = Paths.get(f.getParent(),f.getName().concat(".zip")).toUri().toString();
+                System.out.println(sPath);
                 URI zipURI = new URI("jar:".concat(sPath));            
                 try (FileSystem zipfs = FileSystems.newFileSystem(zipURI, env)) {
                     Path filePath = f.toPath();
