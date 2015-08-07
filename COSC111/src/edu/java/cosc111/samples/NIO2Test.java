@@ -11,9 +11,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.AclFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.DosFileAttributes;
+import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.AclEntry;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.Set;
@@ -50,10 +53,10 @@ public class NIO2Test {
         System.out.println("Working Directory: " + pWorkDir);
         System.out.println();
         
-        //showFileStoreInfo();
-        //showRootDirectories();
-        //showSupportedAttributeViews();
-        //testPath();
+        showFileStoreInfo();
+        showRootDirectories();
+        showSupportedAttributeViews();
+        testPath();
         testFiles();
     }
     
@@ -75,6 +78,11 @@ public class NIO2Test {
             if(Files.exists(p) && !Files.notExists(p)){
                 BasicFileAttributes attr = Files.readAttributes(p,                                                
                                                 BasicFileAttributes.class);
+                FileOwnerAttributeView owner = Files.getFileAttributeView(p,                                                
+                                                FileOwnerAttributeView.class);
+                AclFileAttributeView acl = Files.getFileAttributeView(p,                                                
+                                                AclFileAttributeView.class);
+                
                 System.out.println("Attributes: ");
                 System.out.println("   Size:" +  attr.size());
                 System.out.println("   Create:" +  toDateFormat(attr.creationTime()));
@@ -83,6 +91,13 @@ public class NIO2Test {
                 System.out.println("   Directory:" +  attr.isDirectory());
                 System.out.println("   Regular File:" +  attr.isRegularFile());
                 System.out.println("   Other Type:" +  attr.isOther());     
+                System.out.println("   Owner: " + owner.getOwner().getName());
+                System.out.println("   ACL");
+                
+                for(AclEntry entry:acl.getAcl()){
+                    System.out.println("      " + entry.principal().getName() + 
+                                        ": " + entry.permissions());
+                }
             }else if(!Files.exists(p) && Files.notExists(p)){
                 System.out.println("   File does not exists.");
             }else{
