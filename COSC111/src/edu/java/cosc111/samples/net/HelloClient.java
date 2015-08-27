@@ -38,7 +38,7 @@ public class HelloClient {
                 PrintWriter cout = new PrintWriter(sock.getOutputStream(),true)){
                 
                 System.out.println("Sending \"hello\"");
-                cout.println("hi");  
+                cout.println("hello");  
                 String msg = cin.readLine();
                 if(msg!=null && msg.equals("hi")){
                     System.out.println("Server: \"hi\"");

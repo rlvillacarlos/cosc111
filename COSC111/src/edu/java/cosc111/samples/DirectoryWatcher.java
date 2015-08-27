@@ -1,17 +1,18 @@
 package edu.java.cosc111.samples;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.nio.file.Path;
 import static java.nio.file.StandardWatchEventKinds.*;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
@@ -42,17 +43,18 @@ public class DirectoryWatcher {
                     } catch (InterruptedException ex) {
                         break;
                     }
+                    
                     for (WatchEvent<?> event : key.pollEvents()) {
                         WatchEvent.Kind<?> kind = event.kind();
 
                         if (kind == OVERFLOW) {
                             continue;
                         }
-
                         WatchEvent<Path> ev = (WatchEvent<Path>) event;
-                        Path target = dir.resolve(ev.context());
+                        Path target = dir.resolve(ev.context());                       
                         System.out.println("Event:   " + kind.name());
                         System.out.println("Target:  " + target);
+
 
                     }
                     boolean valid = key.reset();
@@ -64,5 +66,5 @@ public class DirectoryWatcher {
                 ex.printStackTrace();
             }
         }
-    }
+    } 
 }
