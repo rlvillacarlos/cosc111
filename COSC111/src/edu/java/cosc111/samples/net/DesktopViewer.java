@@ -156,6 +156,12 @@ public class DesktopViewer extends javax.swing.JFrame {
                     }                }                
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }finally{
+                try {
+                    socket.leaveGroup(oHost);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         
