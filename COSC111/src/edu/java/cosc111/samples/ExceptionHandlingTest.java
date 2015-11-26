@@ -59,6 +59,7 @@ public class ExceptionHandlingTest {
             sout.println("The file \"" + pFile + "\" does not exists.");
         } catch (IOException ex3) {
             sout.println("Error while reading file: " + ex3.getMessage());
+            sout.println(ex3.getCause());
         }
     }   
 }
