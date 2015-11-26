@@ -17,7 +17,7 @@ import java.net.SocketTimeoutException;
  */
 public class HelloServer {
     private static final int nPort = 1024;
-    private static final int nTimeOut = 20000;
+    private static final int nTimeOut = 2000;
     
     public static void main(String[] args) throws IOException {
         doServe();

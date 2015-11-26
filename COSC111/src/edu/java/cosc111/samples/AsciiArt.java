@@ -83,9 +83,9 @@ public class AsciiArt {
             }
         }
         Graphics2D g =  (Graphics2D) img.getGraphics();
-        Font fnt = new Font(Font.MONOSPACED,Font.PLAIN,10);  
+        Font fnt = new Font(Font.MONOSPACED,Font.PLAIN,10);          
         g.setFont(fnt);
-        FontRenderContext ctxt = g.getFontRenderContext();
+        FontRenderContext ctxt = g.getFontRenderContext();        
         List<TextLayout> layouts = new ArrayList<>();
         
         try(OutputStream out = new BufferedOutputStream(new FileOutputStream(f))){

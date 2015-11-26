@@ -11,6 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
@@ -113,7 +114,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         private static final String BROADCAST_ADDR = "224.0.1.0";
         
         private InetAddress oHost;
-        private MulticastSocket socket;
+        private DatagramSocket socket;
         private final Map<Integer,Map<Integer,FrameBlock>> frames = new HashMap<>();
         private final UpdatableBinaryMinHeapPQ<Integer,Long> frameAge = new UpdatableBinaryMinHeapPQ<>();
         private final ByteArrayOutputStream buffImg = new ByteArrayOutputStream();        
@@ -129,8 +130,8 @@ public class DesktopViewer extends javax.swing.JFrame {
         public void run(){
             try {
                 oHost = InetAddress.getByName(BROADCAST_ADDR);
-                socket = new MulticastSocket(DEFAULT_PORT);
-                socket.joinGroup(oHost);
+                socket = new DatagramSocket(DEFAULT_PORT);
+                //socket.joinGroup(oHost);
                 while(true){
                     try {                
                         DatagramPacket dMsg = new DatagramPacket(new byte[BUFF_SIZE],BUFF_SIZE);
@@ -147,22 +148,23 @@ public class DesktopViewer extends javax.swing.JFrame {
                             block.put(b.index, b);
                             frames.put(b.frame,block);
                         }                        
-                        if(dMsg.getAddress().equals(host)){
+                        //if(dMsg.getAddress().equals(host)){
                             cleanUp();
                             createImage(frame);                
-                        }                
+                        //}                
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }                }                
             } catch (IOException ex) {
                 ex.printStackTrace();
-            }finally{
-                try {
-                    socket.leaveGroup(oHost);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
             }
+//            finally{
+//                try {
+//                    socket.leaveGroup(oHost);
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
         }
         
         public void cleanUp() {

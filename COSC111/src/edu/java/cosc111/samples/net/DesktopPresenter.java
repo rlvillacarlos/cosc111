@@ -70,7 +70,7 @@ public class DesktopPresenter {
         private static final int DATA_SIZE = 32768;
         private static final int DEFAULT_PORT = 1024;
         private static final int BUFF_SIZE = HEADER_SIZE + DATA_SIZE;
-        private static final String BROADCAST_ADDR = "224.0.1.0";    
+        private static final String BROADCAST_ADDR = "255.255.255.255";//"224.0.1.0";    
         private InetAddress addr;
         
         @Override
