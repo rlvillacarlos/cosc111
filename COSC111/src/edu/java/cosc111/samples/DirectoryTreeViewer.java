@@ -15,19 +15,19 @@ public class DirectoryTreeViewer {
     public static class DirectoryVisitor extends SimpleFileVisitor<Path>{
         int depth = -1;
         String sep = FileSystems.getDefault().getSeparator();
-        private void printWithLinks(Path p, boolean isDir){            
+        private void printWithLinks(Path p, BasicFileAttributes attrs, boolean isDir){            
             for(int i = 1;i<=depth;i++){
                 System.out.print("  ");
             }
             System.out.println(" |-[" + p.getFileName() + 
-                    (isDir ? sep : "") + "]" );
+                    (isDir ? sep : attrs.size() ) + "]" );
         }
 
         @Override
         public FileVisitResult visitFile(Path file, 
             BasicFileAttributes attrs) throws IOException {
             if(Files.isReadable(file)){
-                printWithLinks(file,false);                
+                printWithLinks(file,attrs,false);                
             }
             return FileVisitResult.CONTINUE;
         }
@@ -36,7 +36,7 @@ public class DirectoryTreeViewer {
         public FileVisitResult preVisitDirectory(Path dir, 
             BasicFileAttributes attrs) throws IOException {
                 if(depth>=0){
-                    printWithLinks(dir,true);                
+                    printWithLinks(dir,attrs,true);                
                 }else{
                     System.out.println("*-[" + dir + sep + "]");
                 }
@@ -55,7 +55,7 @@ public class DirectoryTreeViewer {
         @Override
         public FileVisitResult visitFileFailed(Path file, 
                 IOException exc) throws IOException {
-            printWithLinks(file, Files.isDirectory(file));
+            printWithLinks(file, null, Files.isDirectory(file));
             return FileVisitResult.CONTINUE;
         }        
     }

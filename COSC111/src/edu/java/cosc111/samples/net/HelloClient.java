@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class HelloClient {
     private static final int nPort = 1024;
-    private static final int nTimeOut = 5000;
+    private static final int nTimeOut = 20000;
     
     public static void main(String[] args) throws IOException {
         System.out.print("Enter host address/name: ");
@@ -37,7 +37,7 @@ public class HelloClient {
                                             sock.getInputStream(),"UTF-8"));
                 PrintWriter cout = new PrintWriter(sock.getOutputStream(),true)){
                 
-                System.out.println("Sending \"hello\"");
+                System.out.println("Sending \"hello\"");                
                 cout.println("hello");  
                 String msg = cin.readLine();
                 if(msg!=null && msg.equals("hi")){
@@ -46,7 +46,8 @@ public class HelloClient {
                 }
             }
         }catch(SocketException | UnknownHostException | SocketTimeoutException e){
-            System.out.println("Error:  " + e.getMessage());
+//            System.out.println("Error:  " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

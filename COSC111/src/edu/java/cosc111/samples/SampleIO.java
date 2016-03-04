@@ -58,14 +58,16 @@ public class SampleIO {
     private static void charStreamTest(File f) throws IOException{
             PrintWriter fout = new PrintWriter(
                                 new BufferedWriter(
-                                    new OutputStreamWriter(
-                                       new BufferedOutputStream(
-                                          new FileOutputStream(f)),"utf-8")));
+                                    new OutputStreamWriter(                                       
+                                          new FileOutputStream(f),"utf-8")));
             
             String toWrite = "The quick brown fox jumps over the lazy dog.";
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");            
-            for(String s:toWrite.split("\\s")){
-                fout.println(s);
+//            for(String s:toWrite.split("\\s")){
+//                fout.print(s);
+//            }
+            for (int i = 0; i <= 255; i++) {
+               fout.write(Integer.toString(i));
             }
             fout.close();
             System.out.println("\nDone writing to '" + f.getAbsolutePath() + "'");
@@ -89,7 +91,7 @@ public class SampleIO {
                             new FileOutputStream(f));
         
         System.out.println("Writing to '" + f.getAbsolutePath() + "'");
-        for(int i=0;i<512;i++){
+        for(int i=0;i<=255;i++){
             out.write(i);
         }
         out.flush();
@@ -98,13 +100,13 @@ public class SampleIO {
         System.out.println("Reading from '" + f.getAbsolutePath() + "'");
         
         InputStream in = new BufferedInputStream(
-                            new FileInputStream(f));
+                            new FileInputStream(f),1024);
         byte[] b = new byte[1024];
         int len;
         
         while((len=in.read(b))!=-1){
             for(int i=0;i<len;i++){
-                System.out.print(b[i] + " ");
+                System.out.print((b[i] & 0xff) + " ");
             }            
         }
         in.close();

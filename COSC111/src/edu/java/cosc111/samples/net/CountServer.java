@@ -37,7 +37,7 @@ public class CountServer {
             System.out.println("Port: " + sockServer.getLocalPort());
             
             while(ctr<max){
-                try (Socket sockClient = sockServer.accept()) {
+                try (Socket sockClient = sockServer.accept()) {                    
                     System.out.println("Client " +
                             sockClient.getInetAddress().getHostName() +
                             " connected...");  

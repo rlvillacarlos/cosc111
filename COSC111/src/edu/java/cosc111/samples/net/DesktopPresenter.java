@@ -28,6 +28,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 
 public class DesktopPresenter {
+    private static final int MAX_FPS = 15;
+    private static int curFrameCount =0;
     private static Thread sender = null;
     private static Thread capture = null;
     private static PipedInputStream pipeIn = new PipedInputStream(Sender.BUFF_SIZE);
@@ -70,7 +72,7 @@ public class DesktopPresenter {
         private static final int DATA_SIZE = 32768;
         private static final int DEFAULT_PORT = 1024;
         private static final int BUFF_SIZE = HEADER_SIZE + DATA_SIZE;
-        private static final String BROADCAST_ADDR = "255.255.255.255";//"224.0.1.0";    
+        private static final String BROADCAST_ADDR ="224.0.1.0";    //"255.255.255.255";
         private InetAddress addr;
         
         @Override
@@ -90,6 +92,7 @@ public class DesktopPresenter {
             int frameCount = 0;
             while(true){
                 try(DatagramSocket socket = new DatagramSocket()){    
+//                    socket.setBroadcast(true);
                     byte[] frame = toByteArray(frameCount);           
                     int piece = 0;
                     while((len=pipeIn.read(buff,HEADER_SIZE,BUFF_SIZE-HEADER_SIZE))!=-1){       
@@ -130,16 +133,6 @@ public class DesktopPresenter {
     
     private static class ScreenCapture implements Runnable{
         private final Path pathCursor = Paths.get("resources","cursor", "white_cursor.png");
-        private ImageWriter imgWriter;
-        public ScreenCapture() {
-//            Iterator<ImageWriter> formatWriter = ImageIO.getImageWritersByFormatName("jpg");
-//            if(formatWriter.hasNext()){
-//                imgWriter = formatWriter.next();
-//                ImageWriteParam writeParam = imgWriter.getDefaultWriteParam();
-//                writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-//                writeParam.setCompressionQuality(0.9f);
-//            }
-        }
         
         @Override
         public void run() {
@@ -148,7 +141,7 @@ public class DesktopPresenter {
                 Rectangle screenRectangle = new Rectangle(screenSize);
                 Robot robot = new Robot();
                 while(true){
-                    if(!isSending){
+                    if(!isSending && curFrameCount < MAX_FPS){
                         try {
                             BufferedImage img = robot.createScreenCapture(screenRectangle);                            
                             Image cursor = ImageIO.read(pathCursor.toFile());
@@ -160,6 +153,7 @@ public class DesktopPresenter {
                             isSending=true;
                             ImageIO.write(img, "png", pipeOut);                    
                             pipeOut.close();  
+                            curFrameCount ++;
                         } catch (IOException ex) {
                             System.out.println(pathCursor.toAbsolutePath());
                             ex.printStackTrace();
@@ -167,7 +161,8 @@ public class DesktopPresenter {
                     }else{
                         try{
 //                            System.out.println("Sleeping...");
-                            Thread.sleep(10);
+                            Thread.sleep(1000);
+                            curFrameCount = 0;
                         }catch(InterruptedException ex){}
                     }
                 } 

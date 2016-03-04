@@ -17,7 +17,7 @@ import java.net.SocketTimeoutException;
  */
 public class HelloServer {
     private static final int nPort = 1024;
-    private static final int nTimeOut = 2000;
+    private static final int nTimeOut = 20000;
     
     public static void main(String[] args) throws IOException {
         doServe();
@@ -29,7 +29,7 @@ public class HelloServer {
             sockServer.bind(new InetSocketAddress(nPort));
             InetAddress addr = InetAddress.getLocalHost();
             System.out.println("Server is running @ " + addr);
-            System.out.println("Connection timeount: " + 
+            System.out.println("Connection timeout: " + 
                                 sockServer.getSoTimeout() + " ms.");
             while(true){
                 System.out.println("Waiting for client...");
@@ -40,14 +40,15 @@ public class HelloServer {
                                             new InputStreamReader(
                                                 sockClient.getInputStream(),"UTF-8"));
                     PrintWriter cout = new PrintWriter(sockClient.getOutputStream(),true)){
-
                     if(cin.readLine().equals("hello")){
                         System.out.println("Client: \"hello\"");
                         System.out.println("Sending \"hi\"");
                         cout.println("hi");                        
-                        System.out.println("Closing connection...");
-                        sockClient.close();
+                    }else{
+                        System.out.println("Unknown message from client");
                     }
+                    System.out.println("Closing connection...");
+                    sockClient.close();                        
                 }
             }
         }catch(SocketTimeoutException e){

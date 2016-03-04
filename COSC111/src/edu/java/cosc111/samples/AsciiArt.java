@@ -2,7 +2,6 @@ package edu.java.cosc111.samples;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -14,8 +13,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -146,6 +143,8 @@ public class AsciiArt {
         double hPercent = 1.0D;
         double wPercent = 1.0D;
         double perc;
+        
+        
         if(nImgHeight<=MAX_HEIGHT && nImgWidth <=MAX_WIDTH){
             return img;
         }        

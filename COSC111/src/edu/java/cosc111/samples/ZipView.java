@@ -57,6 +57,10 @@ public class ZipView {
     }
     
     private static String formatFileTime(FileTime ft){
+        if(ft==null){
+            return "";
+        }
+        
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(ft.toMillis());
         return String.format("%1$tm/%1$td/%1$tY %1$tr",cal);            

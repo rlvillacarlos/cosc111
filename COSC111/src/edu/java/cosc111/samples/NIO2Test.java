@@ -29,14 +29,20 @@ public class NIO2Test {
     private static final String     sRoot = pRoot.toString();
     
     private static void init() throws IOException{
+        // Relative Path (root): \samples -> C:\samples
         Path src = Paths.get(delim + "samples");
-        
+       
         if(Files.exists(src)){
             DirectoryTreeDeleter.deleteDirectoryTree(src);
         }
-        
+        //Path sample1 = Paths.get("\\samples\\sample1");
+        //src:\samples
+        // \samples\sample1\sample1.txt
+        // \samples\sample2\sample2.txt
         Path[] contents = {src.resolve(Paths.get("sample1","sample1.txt")),
-                           src.resolve(Paths.get("sample2","sample2.txt"))
+                           src.resolve(Paths.get("sample2","sample2.txt")),
+                           src.resolve(Paths.get("sample3","sample3.txt")),
+                           src.resolve(Paths.get("sample4","samplers","sample4.txt"))
                           };
         
         for(Path p:contents){
@@ -53,10 +59,10 @@ public class NIO2Test {
         System.out.println("Working Directory: " + pWorkDir);
         System.out.println();
         
-        showFileStoreInfo();
-        showRootDirectories();
-        showSupportedAttributeViews();
-        testPath();
+//        showFileStoreInfo();
+//        showRootDirectories();
+//        showSupportedAttributeViews();
+//        testPath();
         testFiles();
     }
     
@@ -78,6 +84,8 @@ public class NIO2Test {
             if(Files.exists(p) && !Files.notExists(p)){
                 BasicFileAttributes attr = Files.readAttributes(p,                                                
                                                 BasicFileAttributes.class);
+                DosFileAttributes dosAttr = Files.readAttributes(p, 
+                                                DosFileAttributes.class);
                 FileOwnerAttributeView owner = Files.getFileAttributeView(p,                                                
                                                 FileOwnerAttributeView.class);
                 AclFileAttributeView acl = Files.getFileAttributeView(p,                                                
@@ -93,6 +101,8 @@ public class NIO2Test {
                 System.out.println("   Other Type:" +  attr.isOther());     
                 System.out.println("   Owner: " + owner.getOwner().getName());
                 System.out.println("   ACL");
+                
+                
                 
                 for(AclEntry entry:acl.getAcl()){
                     System.out.println("      " + entry.principal().getName() + 
@@ -141,7 +151,7 @@ public class NIO2Test {
     private static void testPath(){
         Path[] oPath = new Path[10];
         oPath[0] = Paths.get(sRoot,"samples","sample1","sample1.txt");
-        oPath[1] = Paths.get(sRoot + "\\samples\\sample2\\sample2.txt");
+        oPath[1] = Paths.get(sRoot ,"samples","sample2","sample2.txt");
         
         //Path relative to the working directory
         oPath[2] = Paths.get("samples" , "sample","sample.txt");
@@ -174,7 +184,7 @@ public class NIO2Test {
         Path parent = oPath[0].getParent();
         System.out.println("Path: " + oPath[0]);
         System.out.println("Parent: " + parent);
-        for(int j = 2;j<=3;j++){
+        for(int j = 2;j<=3;j++){            
             Path p = Paths.get("sample" + j + ".txt");
             Path p2 = oPath[0].resolveSibling(p);
             Path p1 = parent.resolve(p);
