@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class UDPClient1 {
-    private static final int BUFF_SIZE = 1024;
+    private static final int BUFF_SIZE = 1;
     
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -38,7 +38,7 @@ public class UDPClient1 {
     
     private static void send(String host, int port, String msg){
         try {
-            byte[] tmp = new byte[BUFF_SIZE];
+            byte[] tmp = new byte[BUFF_SIZE];            
             DatagramSocket socket = new DatagramSocket();    
             socket.setSoTimeout(1000);
             ByteArrayInputStream bArrMsg = new ByteArrayInputStream(msg.getBytes());

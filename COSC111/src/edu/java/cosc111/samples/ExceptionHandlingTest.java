@@ -21,8 +21,8 @@ public class ExceptionHandlingTest {
             arr = new int[Integer.parseInt(fin.nextLine())];                
             try{
                 int i =0;
-                while(fin.hasNextLine()){
-                    arr[i++] = Integer.parseInt(fin.nextLine());
+                while(fin.hasNext()){
+                    arr[i++] = fin.nextInt();
                 }
                 if(i<arr.length)
                     throw new NoSuchElementException("Element " + i + " does not exists.");      
