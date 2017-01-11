@@ -9,9 +9,9 @@ public class GreetingThread extends Thread {
 
     @Override
     public void run() {
-        try {
-            sleep(1000);
+//        try {
+//            sleep(1000);
             System.out.print(greeting);
-        } catch (InterruptedException e) {}
+//        } catch (InterruptedException e) {}
     }
 }

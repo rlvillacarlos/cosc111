@@ -17,8 +17,8 @@ public class BroadcastSender {
      */
     public static void main(String[] args) throws SocketException, IOException {
         try(DatagramSocket socket = new DatagramSocket()){
-            socket.setSoTimeout(1000);
-            socket.setBroadcast(true);    
+            socket.setSoTimeout(10000);
+//            socket.setBroadcast(true);    
             System.out.println("-Broadcaster's Information-");
             System.out.println("  Address:" + InetAddress.getLocalHost());            
             System.out.println("  Port:" + socket.getLocalPort());            

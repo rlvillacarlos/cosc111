@@ -26,6 +26,7 @@ public class ZipFS {
                                         "zip","jar"));
         if(jZipFileCreate.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
             URI p = new URI("jar:" + jZipFileCreate.getSelectedFile().toURI().toString());
+            System.out.println(p);
             try (FileSystem zipfs = FileSystems.newFileSystem(p, env)) {
                 while(true){                    
                     jFileChoose.setSelectedFile(new File(""));                    

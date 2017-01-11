@@ -18,8 +18,8 @@ public class SetterValue1 implements Runnable{
         try {
             Thread.sleep(r.nextLong(1000L, 1500L));
             int n = r.nextInt(0,100);
-            System.out.printf("%s sets value1 to %d.%n",name,n);
             s.setValue1(n);
+            System.out.printf("%s sets value1 to %d.%n",name,n);
         } catch (InterruptedException ex) {}
     }
 }

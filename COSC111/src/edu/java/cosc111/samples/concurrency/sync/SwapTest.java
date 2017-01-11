@@ -21,10 +21,10 @@ public class SwapTest {
         Shared.doDelay(true);
         
         t1.start();
-        t2.start();
+//        t2.start();
         
         t1.join();
-        t2.join();
+//        t2.join();
         
         System.out.println("\n-After Swap-");
         System.out.println("s1.value1: " + s1.getValue1());

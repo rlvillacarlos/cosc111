@@ -19,7 +19,7 @@ public class UnsyncCounter implements Counter{
     //Pre-Condition: limit >=0
     //Post-Condition: MAX_COUNT == limit
     //@throws IllegalArgumentException if limit <0
-    public UnsyncCounter(int limit){
+    public UnsyncCounter(int limit){        
         if(limit>=0){
             MAX_COUNT = limit;
         }else{
@@ -33,8 +33,11 @@ public class UnsyncCounter implements Counter{
         if(!isMaxed()){
             delay();
             nCurCount = nCurCount + 1;
-        }            
-
+            
+        }   
+        
+        assert(nCurCount<=MAX_COUNT);
+        
         return nCurCount;
     }
     

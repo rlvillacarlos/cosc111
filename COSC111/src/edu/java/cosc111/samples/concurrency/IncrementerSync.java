@@ -8,7 +8,7 @@ public class IncrementerSync {
         Scanner in = new Scanner(System.in);
         
 //        System.out.print("Number of threads: ");
-        int n = 10000;//in.nextInt();
+        int n = 100;//in.nextInt();
         
         Counter ctr = new SyncCounter(n);
         Thread[] inc = new Thread[n];

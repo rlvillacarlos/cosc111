@@ -21,8 +21,10 @@ public class SyncCounter implements Counter{
     }
     
     public int increment(){        
-        if(!isMaxed()){
-            synchronized (this){
+        int a=100;
+        synchronized (this){
+            //Critical section
+            if(!isMaxed()){            
                 nCurCount = nCurCount + 1;
             }            
         }

@@ -4,7 +4,8 @@ public class SetTest {
     public static void main(String[] args) 
                 throws InterruptedException {
         Shareable s1  = new Shared(0,0,0);
-        Thread th[] = new Thread[30];
+        Thread th[] = new Thread[2];
+        
         
         for(int i=0;i<th.length;i+=2){
             th[i] = new Thread(new SetterValue1("SV1[" + i/2 +"]", s1));

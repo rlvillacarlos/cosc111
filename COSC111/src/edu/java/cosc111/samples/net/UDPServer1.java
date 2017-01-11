@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 
 public class UDPServer1 {
     private static final int DEFAULT_PORT = 1024;
-    private static final int BUFF_SIZE = 1024;
+    private static final int BUFF_SIZE = 1;
     private static final int MAX_IDLE = 120;
     
     private static String sCurrentSender = "";
@@ -33,14 +33,17 @@ public class UDPServer1 {
                     socket.receive(dMsg);
                     nCurIdleCount = 0;
                     String sender = dMsg.getAddress().getHostName()+ "(" +dMsg.getPort() + ")";
-                    if(sCurrentSender.equals(sender)){
-                        sMsgBuffer.append(new String(dMsg.getData()));                                
+                    String sMsg = new String(dMsg.getData());
+                    if(sCurrentSender.equals(sender)){    
+                        sMsgBuffer.append(sMsg);                                
+                        System.out.println(sMsg);
                     }else {
                         if(sMsgBuffer.length()>0) {
                             System.out.print("\n" + sCurrentSender + ": " + sMsgBuffer.toString().trim());
                         }
                         sCurrentSender = sender;
-                        sMsgBuffer = new StringBuilder(new String(dMsg.getData()));
+                        sMsgBuffer = new StringBuilder(sMsg);
+                        System.out.println(sMsg);
                     }
                     dMsg.setData("Message received.".getBytes());
                     socket.send(dMsg);
