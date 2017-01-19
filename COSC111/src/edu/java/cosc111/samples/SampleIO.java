@@ -94,7 +94,7 @@ public class SampleIO {
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");
 
             byte[] data = new byte[255];
-            for (int i = 0; i <= 255; i++) {
+            for (int i = 0; i < 255; i++) {
                 data[i] = (byte) i;
             }
             out.write(data);
