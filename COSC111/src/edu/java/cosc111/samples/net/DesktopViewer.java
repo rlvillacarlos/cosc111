@@ -114,7 +114,7 @@ public class DesktopViewer extends javax.swing.JFrame {
         private static final String BROADCAST_ADDR = "224.0.1.0";
         
         private InetAddress oHost;
-        private DatagramSocket socket;
+        private MulticastSocket socket;
         private final Map<Integer,Map<Integer,FrameBlock>> frames = new HashMap<>();
         private final UpdatableBinaryMinHeapPQ<Integer,Long> frameAge = new UpdatableBinaryMinHeapPQ<>();
         private final ByteArrayOutputStream buffImg = new ByteArrayOutputStream();        
@@ -132,7 +132,7 @@ public class DesktopViewer extends javax.swing.JFrame {
                 oHost = InetAddress.getByName(BROADCAST_ADDR);
                 socket = new MulticastSocket(DEFAULT_PORT);
 //                socket.setBroadcast(true);
-//                socket.joinGroup(oHost);
+                socket.joinGroup(oHost);
                 while(true){
                     try {                
                         DatagramPacket dMsg = new DatagramPacket(new byte[BUFF_SIZE],BUFF_SIZE);
@@ -160,11 +160,11 @@ public class DesktopViewer extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
             finally{
-//                try {
-//                    socket.leaveGroup(oHost);
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
+                try {
+                    socket.leaveGroup(oHost);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         

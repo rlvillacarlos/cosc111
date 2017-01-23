@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -75,7 +76,7 @@ public class RandomIdGeneratorTest {
             out.println(numIds);
             
             //Generate unique random ids
-            List<Integer> ids = RandomIntegerIDGenerator.generate(numDigits, idStart, numIds);
+            Set<Integer> ids = RandomIntegerIDGenerator.generate(numDigits, idStart, numIds);
             
             /*
               0 padded integer format. Each integer has width(number of digits) 

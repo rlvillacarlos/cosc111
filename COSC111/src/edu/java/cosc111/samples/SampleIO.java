@@ -60,7 +60,7 @@ public class SampleIO {
             PrintWriter fout = new PrintWriter(
                                 new BufferedWriter(
                                     new OutputStreamWriter(                                       
-                                          new FileOutputStream(f),StandardCharsets.UTF_8)));
+                                          new FileOutputStream(f),StandardCharsets.UTF_16LE)));
             
             String toWrite = "The quick brown fox jumps over the lazy dog.";
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");            

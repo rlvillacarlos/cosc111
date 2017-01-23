@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  *
@@ -11,10 +13,10 @@ import java.util.Random;
  */
 public class EmployeeShiftScheduleGenerator {
     private static final Random rnd = new Random(System.currentTimeMillis());
-
-    public static Map<Integer,Integer> generate(List<Integer> ids){
+    
+    public static Map<Integer,Integer> generate(Set<Integer> ids){
         if(ids.size()>0){
-            Map<Integer,Integer> shifts = new HashMap<>(ids.size());
+            Map<Integer,Integer> shifts = new TreeMap<>();
             
             for(Integer id:ids){
                 shifts.put(id, getShift());
@@ -27,7 +29,7 @@ public class EmployeeShiftScheduleGenerator {
     
     private static int getShift(){
         double toss = rnd.nextDouble();
-            return (toss < 1/3.0)? 1 : ((toss < 2/3.0)? 2 : 3);
+            return (toss < 0.33)? 1 : ((toss < 0.67)? 2 : 3);
     }
     
 }

@@ -1,19 +1,17 @@
 package edu.java.cosc111.samples;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
  * @author RLVillacarlos
  */
 public class RandomIntegerIDGenerator {
-    public static final int MAX_DIGITS = 10; //int have up to 10 digits only
+    public static final int MAX_DIGITS = 10; //an int has up to 10 digits only
     
-    public static List<Integer> generate(int numDigits, int minId, int count){
+    public static Set<Integer> generate(int numDigits, int minId, int count){
         
         //Check if number of digits is within range
         if(numDigits < 1 || numDigits > MAX_DIGITS){
@@ -40,7 +38,7 @@ public class RandomIntegerIDGenerator {
         Random rnd = new Random(System.currentTimeMillis());
         
         //Create a set for storing unique ids
-        Set<Integer> set = new HashSet<>(count);
+        Set<Integer> set = new TreeSet<>();
         
         //Loop until we have the required number of ids;
         while(set.size()<count){
@@ -52,6 +50,6 @@ public class RandomIntegerIDGenerator {
         }        
         
         //Return the ids as list instead of set.
-        return new ArrayList<>(set);
+        return set;
     }
 }

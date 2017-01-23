@@ -3,9 +3,11 @@ package edu.java.cosc111.samples.timecard;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 
 /**
  *
@@ -18,11 +20,11 @@ public class TimecardDumpGenerator {
     private static final int SHIFT_SPAN_IN_HOURS = 8;
     
     public static TimecardDump generate(Map<Integer,Integer> employeeShifts,Date timecardDate){
-        List<TimecardEntry> dump = new ArrayList<>();
+        Map<Integer,TimecardEntry> dump = new TreeMap<>();
         
         for(Integer id:employeeShifts.keySet()){
             if(isPresent()){
-                dump.add(new TimecardEntry(id, 
+                dump.put(id,new TimecardEntry(id, 
                         createTimeIn(timecardDate, employeeShifts.get(id)), 
                         createTimeOut(timecardDate, employeeShifts.get(id))));                
             }
