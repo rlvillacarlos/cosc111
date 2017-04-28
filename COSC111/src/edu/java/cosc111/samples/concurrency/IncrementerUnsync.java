@@ -7,26 +7,26 @@ public class IncrementerUnsync {
     public static void main(String[] args) throws InterruptedException {
         Scanner in = new Scanner(System.in);
         
-//        System.out.print("Number of threads: ");
-        int n = 1000;
+        System.out.print("Number of threads: ");
+        int n = in.nextInt();
         
         Counter ctr = new UnsyncCounter(10);
-//        Thread[] inc = new Thread[n];
+        Thread[] inc = new Thread[n];
 //        
-//        for(int i=0;i<inc.length;i++){
-//            inc[i] = new Thread(new Incrementer(ctr));
-//        }
-//
-//        for(Thread t:inc){
-//            t.start();
-//        }
-//        
-//        for(Thread t:inc){
-//            t.join();
-//        }
-        for(int i = 0;i<n;i++){
-            ctr.increment();
+        for(int i=0;i<inc.length;i++){
+            inc[i] = new Thread(new Incrementer(ctr));
         }
+//
+        for(Thread t:inc){
+            t.start();
+        }
+//        
+        for(Thread t:inc){
+            t.join();
+        }
+//        for(int i = 0;i<n;i++){
+//            ctr.increment();
+//        }
         
         System.out.println("Counter: " + ctr.getCount());
     }

@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class UDPClient1 {
-    private static final int BUFF_SIZE = 1;
+    private static final int BUFF_SIZE = 1024;
     
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 
 public class UDPServer1 {
     private static final int DEFAULT_PORT = 1024;
-    private static final int BUFF_SIZE = 1;
+    private static final int BUFF_SIZE = 1024;
     private static final int MAX_IDLE = 120;
     
     private static String sCurrentSender = "";

@@ -6,6 +6,7 @@ public class SwapTest {
         
         Shareable s1  = new Shared(0,1,3);
         Shareable s2 = new Shared(1,2,4);
+        
         Thread t1 = new Thread (
                         new Swapper("SW1",s1,s2));
         
@@ -21,7 +22,7 @@ public class SwapTest {
         Shared.doDelay(true);
         
         t1.start();
-//        t2.start();
+        t2.start();
         
         t1.join();
 //        t2.join();

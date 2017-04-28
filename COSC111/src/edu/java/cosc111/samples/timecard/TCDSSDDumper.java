@@ -165,8 +165,10 @@ public class TCDSSDDumper {
             fout.println("Employee Id,Absent,Undertime (in sec.), Overtime (in sec.)");
             for (Map.Entry<Integer, Integer> e : employeeShifts.entrySet()) {
                 int nEmpId = e.getKey();
-
-                fout.printf("%d,", nEmpId);
+                
+                String format = "%1$0" + ID_WIDTH + "d,";
+                
+                fout.printf(format, nEmpId);
 
                 //Check if present
                 if (dump.containsKey(nEmpId)) {

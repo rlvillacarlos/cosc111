@@ -16,9 +16,11 @@ public class GetNetInterfaceInfo {
         Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
 
         for (NetworkInterface netIntf: Collections.list(nets)) {
-            displayInterfaceInformation(netIntf);
+            if(netIntf.isUp()){
+                displayInterfaceInformation(netIntf);
+                System.out.printf("\n");
+            }
 //            displaySubInterfaces(netIf);
-            System.out.printf("\n");
         }                    
     }
     static void displayInterfaceInformation(NetworkInterface netIntf) throws SocketException {
@@ -30,14 +32,15 @@ public class GetNetInterfaceInfo {
         System.out.printf("Is Loopback: %s\n",netIntf.isLoopback());
         System.out.printf("MTU: %d\n",netIntf.getMTU());
         List<InterfaceAddress> intfAddresses = netIntf.getInterfaceAddresses();        
-        if(!intfAddresses.isEmpty())
+        if(!intfAddresses.isEmpty()){
             System.out.println("Interface Addresses:");
-        int i = 0;
-        for (InterfaceAddress intfAddress : intfAddresses) {
-            System.out.printf("  [%d]InetAddress: %s\n", i, intfAddress.getAddress());            
-            System.out.printf("     Broadcast InetAddress: %s\n", intfAddress.getBroadcast());            
-            i++;
-        }        
-        System.out.printf("\n");
+            int i = 0;
+            for (InterfaceAddress intfAddress : intfAddresses) {
+                System.out.printf("  [%d]InetAddress: %s\n", i, intfAddress.getAddress());            
+                System.out.printf("     Broadcast InetAddress: %s\n", intfAddress.getBroadcast());            
+                i++;
+            }        
+            System.out.printf("\n");
+        }
      }       
 }

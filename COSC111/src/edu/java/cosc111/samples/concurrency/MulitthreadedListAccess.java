@@ -85,14 +85,15 @@ public class MulitthreadedListAccess {
    
    
     public static void main(String[] args) {
-        List lst = new CopyOnWriteArrayList();
-        Map<String,List> friends = new ConcurrentHashMap<>();
+        List lst = Collections.synchronizedList(new ArrayList());
+//        Map<String,List> friends = new ConcurrentHashMap<>();
         
         new Thread(new Adder(lst, "Hello")).start();
+        new Thread(new Adder(lst, "World")).start();
+        new Thread(new Adder(lst, "Bye")).start();
         new Thread(new Remover(lst)).start();
         new Thread(new Remover(lst)).start();
-//        new Thread(new Adder(lst, "World")).start();
-//        new Thread(new Adder(lst, "Bye")).start();
         
+//        new Thread(new Printer(lst)).start();
     }
 }

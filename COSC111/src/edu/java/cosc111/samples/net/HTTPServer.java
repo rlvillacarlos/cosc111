@@ -13,11 +13,12 @@ import java.net.SocketTimeoutException;
 
 /**
  *
- * @author Russel
+ * @author russel
  */
-public class HelloServer {
-    private static final int nPort = 1024;
-    private static final int nTimeOut = 1000;//20 sec.
+public class HTTPServer {
+
+   private static final int nPort = 80;
+    private static final int nTimeOut = 20000;
     
     public static void main(String[] args) throws IOException {
         doServe();
@@ -25,7 +26,7 @@ public class HelloServer {
     
     private static void doServe() throws IOException{        
         try(ServerSocket sockServer = new ServerSocket();){
-            sockServer.setSoTimeout(nTimeOut);
+//            sockServer.setSoTimeout(nTimeOut);
             sockServer.bind(new InetSocketAddress(nPort));
             InetAddress addr = InetAddress.getLocalHost();
             System.out.println("Server is running @ " + addr);
@@ -40,16 +41,21 @@ public class HelloServer {
                                             new InputStreamReader(
                                                 sockClient.getInputStream(),"UTF-8"));
                     PrintWriter cout = new PrintWriter(sockClient.getOutputStream(),true)){
-                    sockClient.setSoTimeout(nTimeOut*2);
-                    
-                    if(cin.readLine().equals("hello")){
-                        System.out.println("Client: \"hello\"");
-                        System.out.println("Sending \"hi\"");
-                        cout.println("hi");                        
-                    }else{
-                        System.out.println("Unknown message from client");
+                    String msg;
+                    while((msg = cin.readLine())!=null){
+                        if(msg.length()==0){
+                            break;
+                        }
+                        System.out.println(msg);
                     }
-                    System.out.println("Closing connection...");
+                    String message = "Hello Welcome";
+                    cout.println("HTTP/1.1 200 OK");
+                    cout.printf("Content-Length: %d%n", message.length()+2);
+                    cout.println("Content-Type: text/plain");
+                    cout.println("Server: Simple HTTP Server");
+                    cout.println();
+                    cout.println(message);
+                    cout.println();
                     sockClient.close();                        
                 }
             }
@@ -61,4 +67,5 @@ public class HelloServer {
         }
         
     }
+    
 }

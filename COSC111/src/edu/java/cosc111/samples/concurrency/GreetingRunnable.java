@@ -11,6 +11,7 @@ public class GreetingRunnable implements Runnable{
     public void run() {
         try {
             Thread.sleep(1000);
+//            System.out.println(Thread.currentThread().getState());
             System.out.print(greeting);
         } catch (InterruptedException e) {}
     }

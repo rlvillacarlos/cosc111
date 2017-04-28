@@ -21,7 +21,7 @@ public class BroadcastListener {
         try(DatagramSocket socket = new DatagramSocket(1025)){
             DatagramPacket datagram = new DatagramPacket(new byte[1024], 1024);
             socket.setSoTimeout(10000);
-//            socket.setBroadcast(true);
+            socket.setBroadcast(true);
             System.out.println("-Listener's Information-");            
             System.out.println("  Address:" + InetAddress.getLocalHost());            
             System.out.println("  Port:" + socket.getLocalPort());            

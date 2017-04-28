@@ -24,12 +24,17 @@ import java.util.Set;
 public class NIO2Test {
     private static final FileSystem fsys  = FileSystems.getDefault();
     private static final String     delim = fsys.getSeparator();
+    
     private static final Path       pRoot = Paths.get(delim).toAbsolutePath().getRoot();
     private static final Path       pWorkDir = Paths.get("").toAbsolutePath();
     private static final String     sRoot = pRoot.toString();
     
     private static void init() throws IOException{
         // Relative Path (root): \samples -> C:\samples
+        // C:\xampp\htdocs\home\images\img1.jpg <=> images\img.jpg
+//        String sPath = "E:\\samples\\sample1\\sample.txt";
+//        Path p = Paths.get(sPath);
+//        Path p2 = Paths.get("E:","samples","sample1","sample.txt");
         Path src = Paths.get(delim + "samples");
        
         if(Files.exists(src)){
@@ -90,6 +95,7 @@ public class NIO2Test {
                                                 FileOwnerAttributeView.class);
                 AclFileAttributeView acl = Files.getFileAttributeView(p,                                                
                                                 AclFileAttributeView.class);
+                
                 
                 System.out.println("Attributes: ");
                 System.out.println("   Size:" +  attr.size());
@@ -191,7 +197,7 @@ public class NIO2Test {
             System.out.println("   New path: " + p);
             //Combine 
             System.out.println("   Path after resolving with parent: " + p1);            
-            System.out.println("   Path after resolving with sibling: " + p1);
+            System.out.println("   Path after resolving with sibling: " + p2);
             System.out.println();
         }        
         System.out.println();

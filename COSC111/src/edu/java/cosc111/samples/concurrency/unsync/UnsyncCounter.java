@@ -1,10 +1,7 @@
 package edu.java.cosc111.samples.concurrency.unsync;
 
 import edu.java.cosc111.samples.concurrency.Counter;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UnsyncCounter implements Counter{
     //nCurCount <= MAX_COUNT

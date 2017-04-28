@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class JHex extends javax.swing.JFrame {
     private static final int BUFF_SIZE = 2 << 20 ;
-    private static final int DEFAULT_WIDTH = 32;
+    private static final int DEFAULT_WIDTH = 16;
     private static final int ASCII_DOT = 46;
     private static final int ASCII_SPACE = 32;
     private static final char[] hexArray = "0123456789ABCDEF".toCharArray();

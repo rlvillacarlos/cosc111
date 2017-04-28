@@ -8,10 +8,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -66,11 +77,35 @@ public class Memory extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jdlgServerConfig = new javax.swing.JDialog();
+        jPnlServerConfig = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        jpnlOptions = new javax.swing.JPanel();
+        jpnlLevel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jcmbLevels = new javax.swing.JComboBox<>();
+        jpnIcon = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jcmbIcons = new javax.swing.JComboBox<>();
+        filler13 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler14 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jpnlControl = new javax.swing.JPanel();
+        jbtnCancelCreateServer = new javax.swing.JButton();
+        filler15 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        jbtnCreateServer = new javax.swing.JButton();
+        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(9, 0), new java.awt.Dimension(9, 0), new java.awt.Dimension(9, 32767));
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jPnlPieces = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 100), new java.awt.Dimension(0, 100), new java.awt.Dimension(32767, 100));
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 0), new java.awt.Dimension(50, 32767));
+        panel1 = new java.awt.Panel();
+        jLabel1 = new javax.swing.JLabel();
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(100, 0), new java.awt.Dimension(100, 0), new java.awt.Dimension(50, 32767));
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 100), new java.awt.Dimension(0, 100), new java.awt.Dimension(32767, 100));
         jPnlTimer = new javax.swing.JPanel();
@@ -78,8 +113,98 @@ public class Memory extends javax.swing.JFrame {
         jGameMenuBar = new javax.swing.JMenuBar();
         jMenuGame = new javax.swing.JMenu();
         jMenuNewGame = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuIcons = new javax.swing.JMenu();
+
+        jdlgServerConfig.setTitle("Create Server");
+        jdlgServerConfig.setBackground(new java.awt.Color(255, 255, 255));
+        jdlgServerConfig.setModal(true);
+        jdlgServerConfig.setResizable(false);
+
+        jPnlServerConfig.setLayout(new javax.swing.BoxLayout(jPnlServerConfig, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 100));
+        jPanel2.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanel5.add(filler11, java.awt.BorderLayout.NORTH);
+
+        jpnlOptions.setLayout(new javax.swing.BoxLayout(jpnlOptions, javax.swing.BoxLayout.Y_AXIS));
+
+        jpnlLevel.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setText("Level:");
+        jLabel3.setMaximumSize(new java.awt.Dimension(40, 14));
+        jLabel3.setMinimumSize(new java.awt.Dimension(40, 14));
+        jLabel3.setPreferredSize(new java.awt.Dimension(40, 14));
+        jpnlLevel.add(jLabel3, java.awt.BorderLayout.WEST);
+
+        jcmbLevels.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbLevels.setPreferredSize(new java.awt.Dimension(200, 20));
+        jpnlLevel.add(jcmbLevels, java.awt.BorderLayout.CENTER);
+
+        jpnlOptions.add(jpnlLevel);
+
+        jpnIcon.setLayout(new java.awt.BorderLayout());
+
+        jLabel4.setText("Icon:");
+        jLabel4.setMaximumSize(new java.awt.Dimension(40, 14));
+        jLabel4.setMinimumSize(new java.awt.Dimension(40, 14));
+        jLabel4.setPreferredSize(new java.awt.Dimension(40, 14));
+        jpnIcon.add(jLabel4, java.awt.BorderLayout.WEST);
+
+        jcmbIcons.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbIcons.setPreferredSize(new java.awt.Dimension(200, 20));
+        jpnIcon.add(jcmbIcons, java.awt.BorderLayout.CENTER);
+
+        jpnlOptions.add(jpnIcon);
+
+        jPanel5.add(jpnlOptions, java.awt.BorderLayout.CENTER);
+        jPanel5.add(filler13, java.awt.BorderLayout.WEST);
+        jPanel5.add(filler14, java.awt.BorderLayout.EAST);
+
+        jPanel2.add(jPanel5);
+
+        jPnlServerConfig.add(jPanel2);
+        jPnlServerConfig.add(filler7);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jpnlControl.setMinimumSize(new java.awt.Dimension(161, 10));
+        jpnlControl.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 0, 0));
+
+        jbtnCancelCreateServer.setText("Cancel");
+        jbtnCancelCreateServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelCreateServerActionPerformed(evt);
+            }
+        });
+        jpnlControl.add(jbtnCancelCreateServer);
+        jpnlControl.add(filler15);
+
+        jbtnCreateServer.setText("Create");
+        jbtnCreateServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCreateServerActionPerformed(evt);
+            }
+        });
+        jpnlControl.add(jbtnCreateServer);
+        jpnlControl.add(filler10);
+
+        jPanel4.add(jpnlControl, java.awt.BorderLayout.SOUTH);
+
+        jPanel3.add(jPanel4);
+        jPanel3.add(filler9);
+
+        jPnlServerConfig.add(jPanel3);
+
+        jdlgServerConfig.getContentPane().add(jPnlServerConfig, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Memory");
@@ -93,13 +218,17 @@ public class Memory extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(filler2, java.awt.BorderLayout.PAGE_START);
+        jPanel1.add(filler4, java.awt.BorderLayout.LINE_START);
+
+        panel1.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Memory");
-        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
-        jPanel1.add(filler2, java.awt.BorderLayout.PAGE_START);
-        jPanel1.add(filler4, java.awt.BorderLayout.LINE_START);
+        panel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(panel1, java.awt.BorderLayout.CENTER);
         jPanel1.add(filler5, java.awt.BorderLayout.LINE_END);
         jPanel1.add(filler1, java.awt.BorderLayout.PAGE_END);
 
@@ -118,8 +247,28 @@ public class Memory extends javax.swing.JFrame {
 
         jMenuGame.setText("Game");
 
-        jMenuNewGame.setText("New Game");
+        jMenuNewGame.setText("Solo Mode");
         jMenuGame.add(jMenuNewGame);
+
+        jMenu3.setText("2 Player Mode");
+
+        jMenuItem2.setText("Server");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem3.setText("Client");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenuGame.add(jMenu3);
 
         jGameMenuBar.add(jMenuGame);
 
@@ -134,6 +283,36 @@ public class Memory extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+//        startServer();
+        jcmbLevels.setSelectedIndex(0);
+        jcmbIcons.setSelectedIndex(0);
+        jdlgServerConfig.setSize(300, 150);
+        jdlgServerConfig.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        startClient();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jbtnCreateServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCreateServerActionPerformed
+        jdlgServerConfig.setVisible(false);
+        try {
+            System.out.println("Memory - (Server:" + InetAddress.getLocalHost()+")");
+            setTitle("Waiting for connection...");
+            createPuzzle(jcmbLevels.getSelectedIndex(), jcmbIcons.getSelectedIndex(),true);
+            startServer();
+            setTitle("Memory");
+        } catch (UnknownHostException ex) {
+            String msg = String.format("An error occured while creating server - %s", ex.getMessage());
+            JOptionPane.showMessageDialog(this, msg,this.getTitle(),JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbtnCreateServerActionPerformed
+
+    private void jbtnCancelCreateServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelCreateServerActionPerformed
+       jdlgServerConfig.setVisible(false);
+    }//GEN-LAST:event_jbtnCancelCreateServerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,13 +355,16 @@ public class Memory extends javax.swing.JFrame {
                               new TileIcons("Gems",ImageIO.read(pResDir.resolve("images/pieces3").toFile()),64,64)
                             };        
         this.icons = icons;
+        jcmbIcons.removeAllItems();
         for(int i = 0;i<this.icons.length;i++){
             JMenuItem mnuItem = new JMenuItem();
+            jcmbIcons.addItem(icons[i].label);
             mnuItem.setText(icons[i].label);
             final int iconIndex = i;
             mnuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    createPuzzle(curLevelIndex, iconIndex);
+                    createPuzzle(curLevelIndex, iconIndex,true);
+                    startGame();
                 }
             });
             jMenuIcons.add(mnuItem);
@@ -194,17 +376,68 @@ public class Memory extends javax.swing.JFrame {
                           new Level(6, 6,180),new Level(8, 6,300)};        
         this.levels = levels;
         int i = 0;
+        jcmbLevels.removeAllItems();
         for(Level l:this.levels){
             JMenuItem mnuItem = new JMenuItem();
-            mnuItem.setText(l.rows + " x " + l.cols);
+            String caption =  String.format("%d x %d",l.rows , l.cols);
+            jcmbLevels.addItem(caption);
+            mnuItem.setText(caption);
             final int lvl = i;
             mnuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    createPuzzle(lvl, curIconIndex);
+                    createPuzzle(lvl, curIconIndex,true);
+                    createRandomTiles();
+                    startGame();
                 }
             });
             i++;
             jMenuNewGame.add(mnuItem);
+        }
+        
+    }
+    private void startClient(){
+        String host = JOptionPane.showInputDialog(this,"Server: ",this.getTitle(),JOptionPane.INFORMATION_MESSAGE);
+        
+        try(Socket player1 = new Socket();){
+            player1.connect(new InetSocketAddress(host,1024));
+            try(DataInputStream in = new DataInputStream(
+                                    player1.getInputStream());){
+                int level = in.readInt();
+                int icon = in.readInt();
+                System.out.println(level+ " " + icon );
+                createPuzzle(level, icon,false);
+                for(int i=0;i<pieceValues.length;i++){
+                    pieceValues[i] = in.readInt();
+                }
+            }
+            startGame();
+        } catch (IOException ex) {
+            String msg = String.format("An error occured while connecting to server - %s", ex.getMessage());            
+            JOptionPane.showMessageDialog(this, msg,this.getTitle(),JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    private void startServer(){
+        try(ServerSocket server = new ServerSocket()){
+            server.bind(new InetSocketAddress(1024));
+            Socket player2 = server.accept();
+            
+            ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+            DataOutputStream dOut = new DataOutputStream(bOut);
+            dOut.writeInt(curLevelIndex);
+            dOut.writeInt(curIconIndex);
+            for(int piece:pieceValues){
+                dOut.writeInt(piece);
+            }
+            
+            byte[] data = bOut.toByteArray();
+            
+            try(OutputStream out = player2.getOutputStream();){    
+                out.write(data);
+            }
+            startGame();
+        } catch (IOException ex) {
+            Logger.getLogger(Memory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
     
@@ -213,33 +446,33 @@ public class Memory extends javax.swing.JFrame {
         curLevel = levels[curLevelIndex];
         //Set the current image set
         curIcon = icons[curIconIndex];
-        //Remove all previously added component
-        jPnlPieces.removeAll();
-        //Set the new layout        
-        jPnlPieces.setLayout(new java.awt.GridLayout(curLevel.rows, curLevel.cols));
         //Set the current count
         curCount = curLevel.pieceCount;
         //Set the current time
         curTime = curLevel.time;
         //Create new pieces
         pieceValues = new int[curCount];
-        jPieces = new JLabel[curCount];
+        
         isPaired = new boolean[curCount];
     }
     
-    private void createPuzzle(int levelIndex,int iconIndex){    
+    private void createPuzzle(int levelIndex,int iconIndex, boolean createRandomTiles){    
         if(levelIndex<0 || levelIndex >= levels.length || iconIndex <0 || iconIndex > icons.length)
             return;
         
         curLevelIndex = levelIndex;
         curIconIndex = iconIndex;
+        
         initPuzzle();     
         loadTimer();
-        pack();
         
-        //Set the new size of the frame
-        setSize(cellSize *curLevel.cols , cellSize*curLevel.rows + jPnlTimer.getHeight());
+        if(createRandomTiles){
+            createRandomTiles();
+        }
         
+    }
+    
+    private void createRandomTiles(){
         Random rnd = new Random(System.currentTimeMillis());
         
         //Fill array with random pairs
@@ -257,8 +490,18 @@ public class Memory extends javax.swing.JFrame {
             pieceValues[j] = pieceValues[i];
             pieceValues[i] = tmp;
         }
-        
+    }
+    
+    private void startGame(){
         //Set-up the GUI
+        
+        //Remove all previously added component
+        jPnlPieces.removeAll();
+        //Set the new layout        
+        jPnlPieces.setLayout(new java.awt.GridLayout(curLevel.rows, curLevel.cols));
+        
+        jPieces = new JLabel[curCount];
+        
         for(int i =0;i<pieceValues.length;i++){
             //Compute the x and y position of the subimage
             int y = (pieceValues[i]/curIcon.cols);// * imageHeight;
@@ -283,7 +526,12 @@ public class Memory extends javax.swing.JFrame {
             //Add the panel to the main panel
             jPnlPieces.add(pnl);
         }
+        pack();
         jPnlPieces.doLayout();
+    
+        //Set the new size of the frame
+        setSize(cellSize *curLevel.cols , cellSize*curLevel.rows + jPnlTimer.getHeight());
+
         startTimer();
     }
     
@@ -426,18 +674,45 @@ public class Memory extends javax.swing.JFrame {
 //    private java.awt.GridLayout gameUILayout;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler10;
+    private javax.swing.Box.Filler filler11;
+    private javax.swing.Box.Filler filler13;
+    private javax.swing.Box.Filler filler14;
+    private javax.swing.Box.Filler filler15;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler4;
     private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler9;
     private javax.swing.JMenuBar jGameMenuBar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenuGame;
     private javax.swing.JMenu jMenuIcons;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu jMenuNewGame;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPnlPieces;
+    private javax.swing.JPanel jPnlServerConfig;
     private javax.swing.JPanel jPnlTimer;
+    private javax.swing.JButton jbtnCancelCreateServer;
+    private javax.swing.JButton jbtnCreateServer;
+    private javax.swing.JComboBox<String> jcmbIcons;
+    private javax.swing.JComboBox<String> jcmbLevels;
+    private javax.swing.JDialog jdlgServerConfig;
+    private javax.swing.JPanel jpnIcon;
+    private javax.swing.JPanel jpnlControl;
+    private javax.swing.JPanel jpnlLevel;
+    private javax.swing.JPanel jpnlOptions;
     private javax.swing.JLabel lblTime;
+    private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
 }

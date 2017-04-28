@@ -32,7 +32,7 @@ public class Shared implements Shareable{
     }
 
     @Override
-    public synchronized int setValue1(int v) {
+    public int setValue1(int v) {
         synchronized(lck1){
             delay();
             int tmp = value1;
@@ -42,7 +42,7 @@ public class Shared implements Shareable{
     }
 
     @Override
-    public synchronized int getValue2(){
+    public int getValue2(){
         synchronized(lck2){
             delay();
             return value2;
@@ -50,8 +50,8 @@ public class Shared implements Shareable{
     }
 
     @Override
-    public synchronized int setValue2(int v) {
-        synchronized(lck1){
+    public int setValue2(int v) {
+        synchronized(lck2){
             delay();
             int tmp = value2;
             value2 = v;
@@ -61,11 +61,11 @@ public class Shared implements Shareable{
     
     @Override
     public void swap (Shareable s){
-//        delay();
-//        synchronized(this){
+        delay();
+//        synchronized(this){         //S1        S2
 //            delay();
 //            synchronized(s){
-//                int tmp = s.getValue1();
+//                int tmp = s.getValue1();//S2    S1
 //                s.setValue1(value1);
 //                value1 = tmp;
 //
