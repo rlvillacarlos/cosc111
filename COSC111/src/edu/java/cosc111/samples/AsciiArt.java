@@ -33,7 +33,7 @@ public class AsciiArt {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        JFileChooser jFileChoose = new JFileChooser("E:");
+        JFileChooser jFileChoose = new JFileChooser("C:");
         
         if(jFileChoose.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
             try {
