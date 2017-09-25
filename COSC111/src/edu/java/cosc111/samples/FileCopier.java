@@ -31,8 +31,7 @@ public class FileCopier {
         }
     }
        
-    public static void copy(Path src,Path dest) 
-        throws IOException{
+    public static void copy(Path src,Path dest) throws IOException{
         byte[] buff = new byte [BUFF_SIZE];        
         try(BufferedInputStream fin = new BufferedInputStream(
                                             new FileInputStream(src.toFile()));
