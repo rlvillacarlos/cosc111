@@ -109,7 +109,6 @@ public class NIO2Test {
                 System.out.println("   ACL");
                 
                 
-                
                 for(AclEntry entry:acl.getAcl()){
                     System.out.println("      " + entry.principal().getName() + 
                                         ": " + entry.permissions());
@@ -173,7 +172,7 @@ public class NIO2Test {
         oPath[7] = oPath[6].normalize();
         
         //The .. in a path refers to the parent of the current directory
-        oPath[8] = Paths.get(sRoot + "\\samples\\..");
+        oPath[8] = Paths.get(sRoot + "\\samples\\..\\sample1\\..");
         oPath[9] = oPath[8].normalize();
         int i = 0;
         for(Path p:oPath){

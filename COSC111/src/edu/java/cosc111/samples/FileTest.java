@@ -10,9 +10,6 @@ import java.util.Scanner;
  */
 public class FileTest {
 
-    /**
-     * @param args the command line arguments
-     */
     private static final Scanner cin = new Scanner(System.in);
     
     public static void main(String[] args) throws IOException {

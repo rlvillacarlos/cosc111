@@ -1,12 +1,8 @@
 package edu.java.cosc111.samples.concurrency;
 
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import sun.swing.text.CountingPrintable;
 
 /**
  *
