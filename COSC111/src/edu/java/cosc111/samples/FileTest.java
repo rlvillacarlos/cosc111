@@ -34,6 +34,7 @@ public class FileTest {
         System.out.printf("Readable: %b%n",f.canRead());
         System.out.printf("Writable: %b%n",f.canWrite());
         System.out.printf("Executable: %b%n",f.canExecute());
+        System.out.printf("Hidden: %b%n",f.isHidden());
         System.out.println("-------------------------------------------------\n");
     }
     

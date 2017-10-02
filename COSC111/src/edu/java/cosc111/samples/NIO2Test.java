@@ -67,8 +67,8 @@ public class NIO2Test {
 //        showFileStoreInfo();
 //        showRootDirectories();
 //        showSupportedAttributeViews();
-//        testPath();
-        testFiles();
+        testPath();
+//        testFiles();
     }
     
     private static String toDateFormat(FileTime value){
@@ -155,6 +155,7 @@ public class NIO2Test {
     
     private static void testPath(){
         Path[] oPath = new Path[10];
+        
         oPath[0] = Paths.get(sRoot,"samples","sample1","sample1.txt");
         oPath[1] = Paths.get(sRoot ,"samples","sample2","sample2.txt");
         
@@ -168,7 +169,7 @@ public class NIO2Test {
         oPath[5] = oPath[4].toAbsolutePath();        
         
         //The . in a path refers to the current directory
-        oPath[6] = Paths.get(sRoot + "\\samples\\.");
+        oPath[6] = Paths.get(sRoot + "\\samples\\.\\sample1.txt");
         oPath[7] = oPath[6].normalize();
         
         //The .. in a path refers to the parent of the current directory

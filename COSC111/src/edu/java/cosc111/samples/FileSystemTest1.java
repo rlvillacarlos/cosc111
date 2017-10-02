@@ -5,7 +5,6 @@ import java.nio.file.FileStore;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.spi.FileSystemProvider;
 import java.util.Set;
 
@@ -50,7 +49,6 @@ public class FileSystemTest1 {
             System.out.print("[" + root + "] ");            
         }
         System.out.println("");
-        
         
     }
 }
