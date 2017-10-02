@@ -122,8 +122,10 @@ public class NIO2Test {
         }
         
         System.out.println("Creating path: \"" + oPath[2].getParent() + "\"");
+        //E:\Sample\Sample1\Images
         Files.createDirectories(oPath[2].getParent());
         System.out.println("Creating file: \"" + oPath[2] + "\"");
+        //E:\Sample\Sample1\Images\img1.jpeg
         Files.createFile(oPath[2]);
         Path p = oPath[1].resolveSibling("sample1(1).txt");
         System.out.println();
