@@ -11,39 +11,23 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
 
-public class DirectoryTreeViewer {
+public class DeepestDirectoryFinder {
     private static long size = 0;
     
     public static class DirectoryVisitor extends SimpleFileVisitor<Path>{
         int depth = -1;
         
-        String sep = FileSystems.getDefault().getSeparator();
-        private void printWithLinks(Path p, BasicFileAttributes attrs, boolean isDir){            
-            for(int i = 1;i<=depth;i++){
-                System.out.print("  ");
-            }
-            System.out.println(" |-[" + p.getFileName() + 
-                    (isDir ? sep : " (" + attrs.size() + " bytes)" ) + "]" );
-        }
-
         @Override
         public FileVisitResult visitFile(Path file, 
             BasicFileAttributes attrs) throws IOException {
-            if(Files.isReadable(file)){
-                printWithLinks(file,attrs,false);         
-                size += attrs.size();
-            }
+            
             return FileVisitResult.CONTINUE;
         }
                         
         @Override
         public FileVisitResult preVisitDirectory(Path dir, 
             BasicFileAttributes attrs) throws IOException {
-                if(depth>=0){
-                    printWithLinks(dir,attrs,true);                
-                }else{
-                    System.out.println("*-[" + dir + sep + "]");
-                }
+               
                 depth++;
                 return FileVisitResult.CONTINUE;
         }
@@ -51,6 +35,7 @@ public class DirectoryTreeViewer {
         @Override
         public FileVisitResult postVisitDirectory(Path dir, 
             IOException exc) throws IOException {
+            
             depth--;            
             return FileVisitResult.CONTINUE;
         }       
@@ -59,8 +44,7 @@ public class DirectoryTreeViewer {
         @Override
         public FileVisitResult visitFileFailed(Path file, 
                 IOException exc) throws IOException {
-            printWithLinks(file, null, Files.isDirectory(file));
-            return FileVisitResult.CONTINUE;
+            return FileVisitResult.TERMINATE;
         }        
     }
     
