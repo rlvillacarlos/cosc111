@@ -26,9 +26,8 @@ public class DirectoryViewer {
         Calendar cal = Calendar.getInstance();
         cal.set(2017,10,1,0,0,0);
         System.out.println(cal.toInstant());
-        Filter<Path> filter = new CreationDateFilter<>(cal.getTime());
         if(Files.isDirectory(dir)){
-            for(Path p:Files.newDirectoryStream(dir,filter)){
+            for(Path p:Files.newDirectoryStream(dir)){
                 BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
                 System.out.printf("%s   %s%n", p,attr.creationTime().toString());
             }
