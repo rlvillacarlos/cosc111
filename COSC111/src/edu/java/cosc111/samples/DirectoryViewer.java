@@ -1,13 +1,11 @@
 package edu.java.cosc111.samples;
 
 import java.io.IOException;
-import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -23,9 +21,7 @@ public class DirectoryViewer {
         Scanner cin = new Scanner(System.in);
         System.out.print("Directory Path:");
         Path dir = Paths.get(cin.nextLine());
-        Calendar cal = Calendar.getInstance();
-        cal.set(2017,10,1,0,0,0);
-        System.out.println(cal.toInstant());
+       
         if(Files.isDirectory(dir)){
             for(Path p:Files.newDirectoryStream(dir)){
                 BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);

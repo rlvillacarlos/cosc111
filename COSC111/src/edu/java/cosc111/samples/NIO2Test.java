@@ -67,8 +67,8 @@ public class NIO2Test {
 //        showFileStoreInfo();
 //        showRootDirectories();
 //        showSupportedAttributeViews();
-        testPath();
-//        testFiles();
+//        testPath();
+        testFiles();
     }
     
     private static String toDateFormat(FileTime value){
@@ -131,9 +131,7 @@ public class NIO2Test {
         System.out.println();
         System.out.println("Copying \"" + oPath[0] + "\" as \"" + p + "\"");
         System.out.println();
-        Files.copy(oPath[0],p,
-                StandardCopyOption.REPLACE_EXISTING,
-                StandardCopyOption.COPY_ATTRIBUTES);
+        Files.copy(oPath[0],p,StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.COPY_ATTRIBUTES);
         
         System.out.println("Writing contents to " + oPath[1] +".");
         try(PrintWriter fout = new PrintWriter(Files.newBufferedWriter(oPath[1],
