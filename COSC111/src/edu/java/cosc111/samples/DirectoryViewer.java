@@ -1,6 +1,7 @@
 package edu.java.cosc111.samples;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,18 +22,21 @@ public class DirectoryViewer {
         Scanner cin = new Scanner(System.in);
         System.out.print("Directory Path: ");
         Path dir = Paths.get(cin.nextLine());
-        System.out.print("Filter: ");
-        String filter = cin.nextLine().trim();
-        
-        if(filter.isEmpty()){
-            filter="*";
-        }
+//        System.out.print("Filter: ");
+//        String filter = cin.nextLine().trim();
+//        
+//        if(filter.isEmpty()){
+//            filter="*";
+//        }
+        Filter<Path> filter = new FileFilter<>(false);
         
         if(Files.isDirectory(dir)){
             for(Path p:Files.newDirectoryStream(dir,filter)){
                 BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
+               
                 System.out.printf("%s   %s%n", p,
-                    (attr.isDirectory()?"Directory":"File").toString());
+                    (attr.isDirectory()?"Directory":"File").toString());    
+
             }
         }else{
             System.out.println("Not a directory.");
