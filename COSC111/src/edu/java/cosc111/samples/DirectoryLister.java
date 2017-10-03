@@ -29,7 +29,7 @@ public class DirectoryLister {
             switch(filterTypeId){
                 case 0: break;
                 case 1:
-                    filter = getGlobFilterFromUser(dirPath);
+                    filter = getGlobFilterFromUser();
                     break;
                 case 2:
                     filter = getSizeFilterFromUser();
@@ -89,20 +89,20 @@ public class DirectoryLister {
     }
     
     
-    private static Filter<Path> getGlobFilterFromUser(Path p) throws IOException{
+    private static Filter<Path> getGlobFilterFromUser() throws IOException{
         System.out.print("Glob Pattern: ");
         String globStr = cin.nextLine().trim();
-        String pString = p.toString().replace("\\", "\\\\");                
+//        String pString = p.toString().replace("\\", "\\\\");                
         StringBuilder glob = new StringBuilder("glob:");
         if(globStr.isEmpty()){
-            glob.append("**");
+            glob.append("*");
         }else{
-            glob.append(String.format("%s%s%s",pString,(pString.endsWith("\\")?"":"\\\\"),globStr));
+            glob.append(globStr);
         }
         return new Filter<Path>() {
             @Override
             public boolean accept(Path entry) throws IOException {
-                return FileSystems.getDefault().getPathMatcher(glob.toString()).matches(entry);
+                return FileSystems.getDefault().getPathMatcher(glob.toString()).matches(entry.getFileName());
             }
         };
     }
