@@ -25,7 +25,8 @@ public class DirectoryViewer {
         if(Files.isDirectory(dir)){
             for(Path p:Files.newDirectoryStream(dir)){
                 BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-                System.out.printf("%s   %s%n", p,attr.creationTime().toString());
+                System.out.printf("%s   %s%n", p,
+                    (attr.isDirectory()?"Directory":"File").toString());
             }
         }else{
             System.out.println("Not a directory.");
