@@ -17,7 +17,7 @@ import java.net.SocketTimeoutException;
  */
 public class HelloServer {
     private static final int nPort = 1024;
-    private static final int nTimeOut = 1000;//20 sec.
+    private static final int nTimeOut = 20000;//20 sec.
     
     public static void main(String[] args) throws IOException {
         doServe();
@@ -25,7 +25,7 @@ public class HelloServer {
     
     private static void doServe() throws IOException{        
         try(ServerSocket sockServer = new ServerSocket();){
-            sockServer.setSoTimeout(nTimeOut);
+           // sockServer.setSoTimeout(nTimeOut);
             sockServer.bind(new InetSocketAddress(nPort));
             InetAddress addr = InetAddress.getLocalHost();
             System.out.println("Server is running @ " + addr);

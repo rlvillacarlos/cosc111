@@ -21,14 +21,15 @@ public class DirectoryViewer {
     public static void main(String[] args) throws IOException {
         Scanner cin = new Scanner(System.in);
         System.out.print("Directory Path: ");
+        System.out.print("Filter: ");
+        String glob = cin.nextLine().trim();
+        
+        if(glob.isEmpty()){
+            glob="*";
+        }
+        
         Path dir = Paths.get(cin.nextLine());
-//        System.out.print("Filter: ");
-//        String filter = cin.nextLine().trim();
-//        
-//        if(filter.isEmpty()){
-//            filter="*";
-//        }
-        Filter<Path> filter = new FileFilter<>(false);
+        Filter<Path> filter = new GlobFilter<>(glob);
         
         if(Files.isDirectory(dir)){
             for(Path p:Files.newDirectoryStream(dir,filter)){
