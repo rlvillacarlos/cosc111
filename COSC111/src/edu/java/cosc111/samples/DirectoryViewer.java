@@ -21,6 +21,7 @@ public class DirectoryViewer {
     public static void main(String[] args) throws IOException {
         Scanner cin = new Scanner(System.in);
         System.out.print("Directory Path: ");
+        Path dir = Paths.get(cin.nextLine());        
         System.out.print("Filter: ");
         String glob = cin.nextLine().trim();
         
@@ -28,7 +29,6 @@ public class DirectoryViewer {
             glob="*";
         }
         
-        Path dir = Paths.get(cin.nextLine());
         Filter<Path> filter = new GlobFilter<>(glob);
         
         if(Files.isDirectory(dir)){
