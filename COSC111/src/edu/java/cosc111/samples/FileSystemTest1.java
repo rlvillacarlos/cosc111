@@ -24,6 +24,7 @@ public class FileSystemTest1 {
         System.out.println("-Default File System Information-\n");
         System.out.println("Provider Class: " + provider.getClass().getCanonicalName());
         System.out.println("URI Scheme: " + provider.getScheme() );
+        System.out.println("Separator: " + fsys.getSeparator());
         
         System.out.println("Available File Stores");
         
