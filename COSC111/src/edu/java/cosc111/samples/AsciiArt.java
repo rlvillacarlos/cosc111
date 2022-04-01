@@ -112,7 +112,7 @@ public class AsciiArt {
             g.setFont(fnt);
             g.setBackground(Color.white);
             g.clearRect(0, 0, layoutW, layoutH);
-            g.setColor(Color.RED);
+            g.setColor(Color.black);
             int yPos=0;
             for(TextLayout t:layouts){
                 t.draw(g, 0, yPos);
