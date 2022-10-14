@@ -64,15 +64,14 @@ public class SampleIO {
             try(PrintWriter out= new PrintWriter(
                                     new BufferedWriter(
                                         new OutputStreamWriter(
-                                            new BufferedOutputStream(
-                                                new FileOutputStream(f)),"UTF-8")))){
+                                            new FileOutputStream(f),"UTF-8")))){
                 
                 String toWrite = "The quick brown fox jumps over the lazy dog.";
                 String[] toWriteArr = toWrite.split(" ");
                 
                 for(int i =1; i<=100;i++){
-                    System.out.printf("%1$d, %1$d%n",i ,i);
-//                    out.printf("(%2$d, %1$d), ",i,i+1);
+//                    System.out.printf("%1$d, %1$d%n",i ,i);
+                    out.printf("(%1$d, %2$d)%n",i,i+1);
                 }
                 
                 System.out.println("Writing to '" + f.getAbsolutePath() + "'");   
@@ -95,15 +94,17 @@ public class SampleIO {
     
     private static void byteStreamTest(File f) throws IOException{
         
-        try(OutputStream out = new BufferedOutputStream(     new FileOutputStream(f));){
+        //try-with-resources
+        try(OutputStream out = new BufferedOutputStream(new FileOutputStream(f));){
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");
 
+            
             byte[] data = new byte[256];
             for (int i = 0; i < data.length; i++) {
-                data[i] = (byte) i;
+                data[i] = (byte) (i + 256);
             }
             out.write(data);
-            out.flush();
+            //out.flush();
         }        
         
 //        out.close();
@@ -113,7 +114,7 @@ public class SampleIO {
         
         try(InputStream in = new BufferedInputStream(
                                 new FileInputStream(f));){
-            byte[] b = new byte[1024];
+            byte[] b = new byte[256];
             int len;
             //  1111111110000000 
             //& 0000000011111111
@@ -134,7 +135,7 @@ public class SampleIO {
                                     new BufferedOutputStream(
                                         new FileOutputStream(f)));){
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");        
-            fout.writeUTF("Hello");
+            fout.writeUTF("Hello World");
             fout.writeChar('!');
             fout.writeDouble(1.0D);
             fout.writeInt(100);

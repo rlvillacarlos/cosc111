@@ -3,8 +3,10 @@ package edu.java.cosc111.samples;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 /**
@@ -16,7 +18,12 @@ public class PathTest {
     private static final Scanner cin = new Scanner(System.in);
     
     public static void main(String[] args) throws IOException {
-        manageFile();
+        Path base = Paths.get("D:\\codes");
+        
+        System.out.println(base.toAbsolutePath());
+        System.out.println(base.toRealPath());
+        
+        //manageFile();
     }
     
     private static void getFileInformationFromPath(Path p) throws IOException{
@@ -26,10 +33,15 @@ public class PathTest {
         System.out.printf("Absolute Path: %s%n",p.toAbsolutePath());
         System.out.printf("Filename: %s%n",p.getFileName());
         System.out.printf("Parent: %s%n",p.getParent());
+        System.out.printf("Root: %s%n", p.getRoot());
 
         System.out.printf("Kind: %s%n",Files.isDirectory(p)?"Directory":"File");
-        System.out.printf("Size (in bytes): %d%n",Files.size(p));
-
+        
+        if(Files.exists(p)){
+            System.out.printf("Size (in bytes): %d%n",Files.size(p));
+        }
+        
+        
         System.out.printf("Existing: %b%n",Files.exists(p));
         System.out.printf("Readable: %b%n",Files.isReadable(p));
         System.out.printf("Writable: %b%n",Files.isWritable(p));

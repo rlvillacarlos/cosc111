@@ -27,16 +27,15 @@ public class ZipCreate {
         if(jChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
             File f = jChooser.getSelectedFile();
             if(f.getParent()!=null){
-                String sPath = Paths.get(f.getParent(),f.getName().concat(".zip")).toUri().toString();
-                System.out.println(sPath);
-                URI zipURI = new URI("jar:".concat(sPath));            
-                try (FileSystem zipfs = FileSystems.newFileSystem(zipURI, env)) {
+                Path sPath = Paths.get(f.getParent(),f.getName().concat(".zip"));
+                System.out.println("Zip File: " + sPath);
+                try (FileSystem zipfs = FileSystems.newFileSystem(sPath, env,null)) {
                     Path filePath = f.toPath();
                     if(Files.isDirectory(filePath)){
                         Files.walkFileTree(filePath, new DirectoryVisitor(zipfs));
                     }else if(Files.isRegularFile(filePath)){                    
                         Path fPath = zipfs.getPath(f.getName());
-                        System.out.println(fPath);
+                        System.out.println("Adding " + fPath);
                         Files.copy(filePath,fPath);
                     }
                 }                            

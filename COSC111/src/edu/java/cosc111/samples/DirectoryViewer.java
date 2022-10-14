@@ -34,7 +34,7 @@ public class DirectoryViewer {
         if(Files.isDirectory(dir)){
             for(Path p:Files.newDirectoryStream(dir,filter)){
                 BasicFileAttributes attr = Files.readAttributes(p, BasicFileAttributes.class);
-               
+                
                 System.out.printf("%s   %s%n", p,
                     (attr.isDirectory()?"Directory":"File").toString());    
 
