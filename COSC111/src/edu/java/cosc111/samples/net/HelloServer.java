@@ -25,15 +25,15 @@ public class HelloServer {
     
     private static void doServe() throws IOException{        
         try(ServerSocket sockServer = new ServerSocket();){
-           // sockServer.setSoTimeout(nTimeOut);
+            sockServer.setSoTimeout(nTimeOut);
             sockServer.bind(new InetSocketAddress(nPort));
             InetAddress addr = InetAddress.getLocalHost();
-            System.out.println("Server is running @ " + addr);
+            System.out.println("Server is running @ " + addr + ":" + sockServer.getLocalPort());
             System.out.println("Connection timeout: " + 
                                 sockServer.getSoTimeout() + " ms.");
             while(true){
                 System.out.println("Waiting for client...");
-                Socket sockClient = sockServer.accept();
+                Socket sockClient = sockServer.accept(); //block
                 System.out.println("Client @ " + sockClient.getRemoteSocketAddress()
                                     + " is connected.");
                 try(BufferedReader cin = new BufferedReader(

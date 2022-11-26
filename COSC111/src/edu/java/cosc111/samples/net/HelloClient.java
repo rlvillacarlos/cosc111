@@ -30,7 +30,7 @@ public class HelloClient {
         try(Socket sock = new Socket()){            
             sock.setSoTimeout(nTimeOut);
             System.out.println("Connecting to server...");
-            sock.connect(new InetSocketAddress(host,nPort));            
+            sock.connect(new InetSocketAddress(host,nPort)); //block           
             System.out.println("Connected...");
             try(BufferedReader cin = new BufferedReader(
                                         new InputStreamReader(
@@ -38,7 +38,7 @@ public class HelloClient {
                 PrintWriter cout = new PrintWriter(sock.getOutputStream(),true)){
                 
                 System.out.println("Sending \"hello\"");                
-                cout.println("hello");  
+                cout.println("hello ");  
                 String msg = cin.readLine();
                 if(msg!=null && msg.equals("hi")){
                     System.out.println("Server: \"hi\"");
