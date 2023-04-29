@@ -18,12 +18,12 @@ public class PathTest {
     private static final Scanner cin = new Scanner(System.in);
     
     public static void main(String[] args) throws IOException {
-        Path base = Paths.get("D:\\codes");
+        Path base = Paths.get("/Work", "CvSU","2022-2023","2","MSIT 204","Samples");
+//        System.out.println(base.isAbsolute());
+//        System.out.println(base.toAbsolutePath());
+        //System.out.println(base.toRealPath());
         
-        System.out.println(base.toAbsolutePath());
-        System.out.println(base.toRealPath());
-        
-        //manageFile();
+        manageFile();
     }
     
     private static void getFileInformationFromPath(Path p) throws IOException{

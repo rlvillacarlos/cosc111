@@ -9,23 +9,18 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 public class SampleIO {
     public static void main(String[] args) throws IOException{
-        JFileChooser jFileChoose = new JFileChooser("E:\\");
+        JFileChooser jFileChoose = new JFileChooser("F:\\");
         int opt =choose();
         
         if(opt >= 1 && opt <= 3){
@@ -64,7 +59,7 @@ public class SampleIO {
             try(PrintWriter out= new PrintWriter(
                                     new BufferedWriter(
                                         new OutputStreamWriter(
-                                            new FileOutputStream(f),"UTF-8")))){
+                                            new FileOutputStream(f),"UTF-16")))){
                 
                 String toWrite = "The quick brown fox jumps over the lazy dog.";
                 String[] toWriteArr = toWrite.split(" ");
@@ -79,7 +74,7 @@ public class SampleIO {
                 System.out.println("\nDone writing to '" + f.getAbsolutePath() + "'");
             }
             
-            try(BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(f),"UTF-8"))){
+            try(BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(f),"UTF-16"))){
 //                char[] toRead = new char[10];
                 String toRead;
                 int len;
@@ -95,15 +90,21 @@ public class SampleIO {
     private static void byteStreamTest(File f) throws IOException{
         
         //try-with-resources
-        try(OutputStream out = new BufferedOutputStream(new FileOutputStream(f));){
+        try(OutputStream out = new BufferedOutputStream(
+                                new FileOutputStream(f));){
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");
 
             
-            byte[] data = new byte[256];
+            byte[] data = new byte[512];
             for (int i = 0; i < data.length; i++) {
-                data[i] = (byte) (i + 256);
+//                data[i] = (byte) (i);
+                out.write((byte) (i));
+                
             }
-            out.write(data);
+            
+            // 01111111 11111111 11111111 11111111 
+            
+//            out.write(data);
             //out.flush();
         }        
         
@@ -112,33 +113,31 @@ public class SampleIO {
         System.out.println("\nDone writing to '" + f.getAbsolutePath() + "'");
         System.out.println("Reading from '" + f.getAbsolutePath() + "'");
         
-        try(InputStream in = new BufferedInputStream(
-                                new FileInputStream(f));){
-            byte[] b = new byte[256];
+        try(InputStream in = new BufferedInputStream(new FileInputStream(f));){
+            byte[] b = new byte[512];
             int len;
-            //  1111111110000000 
-            //& 0000000011111111
-            //------------------
-            //  0000000010000000 
+            //  11111111 11111111 11111111 100000000 
+            //& 00000000 00000000 00000000 111111111
+            //--------------------------------------
+            //  00000000 00000000 00000000 100000000 
             while((len=in.read(b))!=-1){
                 for(int i=0;i<len;i++){
                     System.out.print((b[i] & 0xff) + " ");
                 }            
             }            
         }
-        
 //        in.close();
         System.out.println("\nDone reading from '" + f.getAbsolutePath() + "'");
     }
     private static void dataStreamTest(File f) throws IOException{
         try(DataOutputStream fout = new DataOutputStream(
-                                    new BufferedOutputStream(
-                                        new FileOutputStream(f)));){
+                                        new BufferedOutputStream(
+                                            new FileOutputStream(f)));){
             System.out.println("Writing to '" + f.getAbsolutePath() + "'");        
             fout.writeUTF("Hello World");
             fout.writeChar('!');
             fout.writeDouble(1.0D);
-            fout.writeInt(100);
+            fout.writeInt(Integer.MAX_VALUE);
             fout.writeLong(2L);
             
 //        fout.close();

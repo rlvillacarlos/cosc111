@@ -30,30 +30,30 @@ public class DirectoryTreeViewer {
         public FileVisitResult visitFile(Path file, 
             BasicFileAttributes attrs) throws IOException {
             if(Files.isReadable(file)){
-//                printWithLinks(file,attrs,false);         
+                printWithLinks(file,attrs,false);         
                 size += attrs.size();
             }
             return FileVisitResult.CONTINUE;
         }
                         
-//        @Override
-//        public FileVisitResult preVisitDirectory(Path dir, 
-//            BasicFileAttributes attrs) throws IOException {
-//                if(depth>=0){
-////                    printWithLinks(dir,attrs,true);                
-//                }else{
-////                    System.out.println("*-[" + dir + sep + "]");
-//                }
-////                depth++;
-//                return FileVisitResult.CONTINUE;
-//        }
+        @Override
+        public FileVisitResult preVisitDirectory(Path dir, 
+            BasicFileAttributes attrs) throws IOException {
+                if(depth>=0){
+                   printWithLinks(dir,attrs,true);                
+                }else{
+                    System.out.println("*-[" + dir + sep + "]");
+                }
+                depth++;
+                return FileVisitResult.CONTINUE;
+        }
 
-//        @Override
-//        public FileVisitResult postVisitDirectory(Path dir, 
-//            IOException exc) throws IOException {
-//            depth--;            
-//            return FileVisitResult.CONTINUE;
-//        }       
+        @Override
+        public FileVisitResult postVisitDirectory(Path dir, 
+            IOException exc) throws IOException {
+            depth--;            
+            return FileVisitResult.CONTINUE;
+        }       
         
 
         @Override
